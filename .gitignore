@@ -2,3 +2,8 @@
 py_log.log
 test.txt
 test.py
+__pycache__/
+tree.gv
+tree.gv.pdf
+tree.dot
+tree.png

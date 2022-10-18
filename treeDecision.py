@@ -1,3 +1,4 @@
+from graph_tree import get_graph
 class DecisionTree:
 
     @classmethod
@@ -30,6 +31,7 @@ class DecisionTree:
             return round(sum(result) / len(result), 2)
         except:
             return "Error"
+
 
 
 class TreeObj:
@@ -78,15 +80,16 @@ DecisionTree.add_obj(TreeObj(-1, None, 2), v_12, False)
 DecisionTree.add_obj(TreeObj(-1, None, 2), v_121)
 DecisionTree.add_obj(TreeObj(-1, None, 1), v_121, False)
 
-# берем данные из файла iris2.csv
-X = []
-y = []
-with open('iris2.csv') as file:
-    file.readline()
-    for data in file.readlines():
-        str_ = data.strip().split(',')
-        X.append(list(map(float, str_[1:5])))
-        y.append(int(str_[5]))
-res = DecisionTree.predict(root, X)
-
-print(DecisionTree.accuracy(y, res))
+get_graph(root, ['sepal_length','sepal_width','petal_length','petal_width'])
+## берем данные из файла iris2.csv
+# X = []
+# y = []
+# with open('iris2.csv') as file:
+#     file.readline()
+#     for data in file.readlines():
+#         str_ = data.strip().split(',')
+#         X.append(list(map(float, str_[1:5])))
+#         y.append(int(str_[5]))
+# res = DecisionTree.predict(root, X)
+#
+# print(DecisionTree.accuracy(y, res))
