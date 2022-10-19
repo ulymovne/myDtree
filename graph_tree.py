@@ -5,17 +5,17 @@ global_name_node = 0
 def parse_tree(tree, feature_names, graph, parrent=None):
     global global_name_node
     global_name_node += 1
-    if not tree.target is None:
+    if not tree.ans is None:
         name_node = global_name_node
         graph.node(str(name_node),
-                   label=f"entropy = {tree.value}\nsamples = __\nvalue = [__, __]",
+                   label=f"entropy = {tree.entropy}\nsamples = {tree.samples}\nvalue = {tree.value}",
                    fillcolor="green")
         if not parrent is None:
             graph.edge(str(parrent), str(name_node))
     else:
         name_node = global_name_node
         graph.node(str(name_node),
-                   label=f"{feature_names[tree.indx]} <= {tree.value}\n\nentropy = __\nsamples = __\nvalue = [__, __]",
+                   label=f"{feature_names[tree.indx]} <= {tree.split_value}\n\nentropy = {tree.entropy}\nsamples = {tree.samples}\nvalue = {tree.value}",
                    fillcolor="#FFFFFF")
         if not parrent is None:
             graph.edge(str(parrent), str(name_node))

@@ -17,7 +17,7 @@ from sklearn.tree import export_graphviz
 #db.columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'target']
 
 
-df = pd.read_csv('iris2.csv', index_col=0).reset_index(drop=True)
+df = pd.read_csv('iris.csv', index_col=0).reset_index(drop=True)
 #sns.scatterplot(data=df, x='sepal_length', y='sepal_width', hue='target')
 #plt.show()
 #df['target2'] = df['target'] == 1
@@ -25,17 +25,17 @@ df = pd.read_csv('iris2.csv', index_col=0).reset_index(drop=True)
 y = df['target']
 X = df.drop(['target'], axis=1)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
-
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+X_train, y_train = X, y
 # sns.scatterplot(data=df, x='sepal_length', y='sepal_width', hue='target')
 # plt.show()
 #
-clf = DecisionTreeClassifier(criterion="entropy")
+clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
 clf.fit(X_train, y_train)
 
-y_pred = clf.predict(X_test)
-mean = precision_score(y_test, y_pred)
-print(mean)
+# y_pred = clf.predict(X_test)
+# mean = precision_score(y_test, y_pred)
+# print(mean)
 
 export_graphviz(
                 decision_tree=clf,
