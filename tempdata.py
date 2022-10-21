@@ -3,8 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import precision_score
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.metrics import accuracy_score, mean_squared_error
 from graphviz import Source
 from sklearn.tree import export_graphviz
 
@@ -17,7 +17,8 @@ from sklearn.tree import export_graphviz
 #db.columns = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'target']
 
 
-df = pd.read_csv('iris.csv', index_col=0).reset_index(drop=True)
+#df = pd.read_csv('iris.csv', index_col=0).reset_index(drop=True)
+df = pd.read_csv('boston.csv', index_col=0).reset_index(drop=True)
 #sns.scatterplot(data=df, x='sepal_length', y='sepal_width', hue='target')
 #plt.show()
 #df['target2'] = df['target'] == 1
@@ -25,20 +26,22 @@ df = pd.read_csv('iris.csv', index_col=0).reset_index(drop=True)
 y = df['target']
 X = df.drop(['target'], axis=1)
 
-#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
-X_train, y_train = X, y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+#X_train, y_train = X, y
 # sns.scatterplot(data=df, x='sepal_length', y='sepal_width', hue='target')
 # plt.show()
 #
-clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-clf.fit(X_train, y_train)
+#clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+reg = DecisionTreeRegressor(max_depth=6)
 
-# y_pred = clf.predict(X_test)
-# mean = precision_score(y_test, y_pred)
-# print(mean)
+reg.fit(X_train, y_train)
+
+y_pred = reg.predict(X_test)
+mean = mean_squared_error(y_test, y_pred)
+print(mean)
 
 export_graphviz(
-                decision_tree=clf,
+                decision_tree=reg,
                 out_file='tree.dot',
                 feature_names = X.columns,
                 filled = True)
